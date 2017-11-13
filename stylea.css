@@ -2,6 +2,7 @@ body {
 background: #ef6a40;
 }
 
-h3{
-	text-align: right;
-}
+p{
+	margin-right:150px;
+	text-align:justify;
+	}
