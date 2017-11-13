@@ -8,7 +8,7 @@ p{
 	}
 	
 img{
-	Height:33%;
+	Max-Height: 100px;
 	Width: 50%;
 	float: right;
 }
