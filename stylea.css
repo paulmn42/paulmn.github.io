@@ -5,5 +5,9 @@ background: #ef6a40;
 p{
 	margin-right:50%;
 	text-align:justify;
-	}
+}
 	
+img{
+	Height: 33%;
+	Float: right;
+}
