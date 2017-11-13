@@ -3,6 +3,10 @@ background: #ef6a40;
 }
 
 p{
-	margin-right:150px;
+	margin-right:50%;
 	text-align:justify;
 	}
+	
+img{
+	Width: 50%; float: right;
+}
