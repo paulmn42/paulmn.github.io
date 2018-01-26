@@ -5,3 +5,7 @@ background: #ef6a40;
 p{
 	font-size:18;
 }
+
+.nav-item{
+	padding:10px;
+}
