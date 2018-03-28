@@ -1,0 +1,292 @@
+
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Carolyn
+ * Date: 12/1/2017
+ * Time: 11:31 AM
+ */
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sponsor Survey</title>
+    <link rel="stylesheet" href="survey.css">
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <script src="Sortable.js"></script>
+    <script src="SponsorSortableList.js"></script>
+    <script src="LoadSelectBoxes.js"></script>
+    <script src="AddSkillBoxes.js"></script>
+    <script src="next_tab.js"></script>
+    <link rel="icon" href="Paper-Plane-icon.png">
+
+</head>
+<body>
+<?php
+include ('navbar.php');
+?>
+<?php
+try{
+    include 'pdo.php';
+    $usersdb = $dbname.".users";
+
+    $campusID = $auth_object->campus_id;
+
+    $stmt = $pdo->query("Select user_type from users where user_id='$campusID'");
+
+    $userType = array();
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $userType[] = $row["user_type"];
+
+    }
+}
+catch(PDOException $e) {
+    echo 'Connection failed ' . $e->getMessage();
+};
+echo
+'<div class="wrapper">';
+if ($userType[0] == "admin"){
+    include('admin_navbar.php');};
+echo '
+    <div class="container" id="content">
+
+        <div class="container">
+            <form action="sponsor_submitted.php" method="post">
+                <h2>Sponsor Survey</h2>
+                <br>
+                <ul class="nav nav-tabs" id="sponsor_survey_tabs">
+                    <li class="active" id="first-tab"><a data-toggle="tab" href="#home">Organization Information</a></li>
+                    <li id="second-tab"><a data-toggle="tab" href="#menu1">Project Information</a></li>
+                    <li id="third-tab"><a data-toggle="tab" href="#menu2">Personal Contact Information</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="home" class="tab-pane fade in active">
+                        <br>
+                        <br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for=""> Organization Name*</label>
+                                    <input class="form-control" id="organization_name" name="organization_name" required>
+                                </div>
+                                <div class="col-md-1">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for=""> Organization Address*</label>
+                                    <input class="form-control" id="organization_address" name="organization_address" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for=""> City*</label>
+                                    <input class="form-control" id="city" name="city" required>
+                                </div>
+                                <div class="col-md-1">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for=""> State*</label>
+                                    <input class="form-control" id="state" name="state" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for=""> Zip Code*</label>
+                                    <input class="form-control" id="zip_code" name="zip_code" required>
+                                </div>
+                                <div class="col-md-1">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for=""> Phone Number*</label>
+                                    <input class="form-control" id="phone" name="phone" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for=""> Organization Website</label>
+                                    <input class="form-control" id="website" name="website">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-md-5">
+                                    <label for=""> Organization Description*</label>
+                                    <textarea class="form-control" id="organization_description" name="organization_description" rows="3" required></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-md-5">
+                                    <a id="next-1" class="btn btn-default next" href="#menu1">Next</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                    <div id="menu1" class="tab-pane fade">
+                        <br>
+                        <br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-md-5">
+                                    <label for=""> Project Summary*</label>
+                                    <textarea class="form-control" id="project_summary" name="project_summary" rows="3" required></textarea>
+                                    <small  class="form-text text-muted">
+                                        Brief statement explaining the goals and methods of the project.
+                                    </small>
+                                </div>
+                                <div class="col-md-1">
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for=""> Description of Process* </label>
+                                    <textarea class="form-control" id="description_of_process" name="description_of_process" rows="3" required></textarea>
+                                    <small  class="form-text text-muted">
+                                        Broad and detailed description of project processes including objectives, tools to be used, and timeline details.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-md-5">
+                                    <label for=""> Other Employees </label>
+                                    <textarea class="form-control" id="other_employees" name="other_employees" rows="3"></textarea>
+                                </div>
+                                <div class="col-md-1">
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for=""> Concerns </label>
+                                    <textarea class="form-control" id="concerns" name="concerns" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-md-5">
+                                    <label for=""> Desired Method(s) of Communication </label>
+                                    <textarea class="form-control" id="desired_communication" name="desired_communication" rows="3"></textarea></div>
+                                <div class="col-md-1">
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for=""> Other Relevant Information </label>
+                                    <textarea class="form-control" id="relevant_information" name="relevant_information" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-md-5">
+                                    <a id="next-2" class="btn btn-default next" href="#menu2">Next</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div id="menu2" class="tab-pane fade">
+                        <br>
+                        <br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for=""> Contact Name*</label>
+                                    <input class="form-control" id="contact_name" name="contact_name" required> </div>
+                                <div class="col-md-1">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for=""> Title</label>
+                                    <input class="form-control" id="contact_title" name="contact_title"> </div>
+                            </div>
+                        </div>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for=""> Email Address*</label>
+                                    <input class="form-control" id="contact_email" name="contact_email" required>
+                                </div>
+                                <div class="col-md-1">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for=""> Phone Number*</label>
+                                    <input class="form-control" id="contact_phone_number" name="contact_phone_number" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-md-5">
+                                    <label for=""> Seconday Contact Method (Skype...)</label>
+                                    <textarea class="form-control" id="contact_seconday_method" name="contact_secondary_method" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <!--    <a href="sponsorsurvey2.html">NEXT</a>-->
+                        <br>
+                        <br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-md-5">
+                                    <button class="btn btn-default"><span>Submit Survey </span></button></div>
+                            </div>
+                        </div>
+
+                    </div>
+            </form>
+        </div>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="form-group col-md-5">
+                    <footer class="navbar fixed-bottom"> Copyright © 2017-18 ICS UCI </footer>
+                </div>
+            </div>
+        </div>
+        <!--<footer class="navbar fixed-bottom"> Copyright © 2017-18 ICS UCI </footer>-->
+
+    </div>
+</div>';
+?>
+
+<!--</div>-->
+<script src="admin_nav.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
